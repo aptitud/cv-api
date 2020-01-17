@@ -2,26 +2,77 @@ const getLocales = locales => {
   return locales.items.map(item => ({ code: item.code, name: item.name }))
 }
 
-const getSchema = (schema, id = 'cv') => {
-  const fields = schema.items
-    .find(p => p.sys.id === id)
-    .fields.map(x => {
-      if (!x.items) {
-        return x
-      }
-      if (x.items.type === 'Link') {
-        const i = x.items.validations[0].linkContentType[0]
-        return { ...x, ...getSchema(schema, i), items: undefined }
-      }
-      throw new Error('oh snap')
-    })
-  return { id, fields }
+const getSchema = (schema, nodeType = 'cv') => {
+  return {
+    fields: schema.items
+      .find(p => p.sys.id === nodeType)
+      .fields.map(field =>
+        !field.items
+          ? field
+          : {
+              ...field,
+              link: true,
+              ...getSchema(
+                schema,
+                field.items.validations[0].linkContentType[0],
+              ),
+              items: undefined,
+            },
+      ),
+  }
 }
 
-const getItem = data => {}
+const resolveValue = (node, values, locale, data) => {
+  if (!values) {
+    return null
+  }
+  const resolvedValue = node.localized
+    ? values[locale]
+    : Object.values(values)[0]
+  if (Array.isArray(resolvedValue)) {
+    return resolvedValue.map(value => resolveValue(node, value, locale, data))
+  }
+  if (node.link) {
+    const asset = data.includes.Entry.find(x => x.sys.id === values.sys.id)
+    return node.fields.reduce(
+      (acc, field) => ({
+        ...acc,
+        [field.name]: resolveValue(field, asset.fields[field.id], locale, data),
+      }),
+      {},
+    )
+  }
+  return resolvedValue || null
+}
+
+const getItem = (item, schema, locales, data) => {
+  return schema.fields.reduce((acc, node) => {
+    const values = item.fields[node.id]
+    if (node.id === 'name') {
+      return {
+        ...acc,
+        name: Object.values(values)[0],
+      }
+    }
+    return {
+      ...acc,
+      ...locales.reduce((locacc, { code: locale }) => {
+        return {
+          ...locacc,
+          [locale]: {
+            ...acc[locale],
+            [node.name]: resolveValue(node, values, locale, data),
+          },
+        }
+      }, {}),
+    }
+  }, {})
+}
 
 const transform = ({ schema, locales, data }) => {
-  return getSchema(schema)
+  return data.items.map(item =>
+    getItem(item, getSchema(schema), getLocales(locales), data),
+  )
 }
 
 module.exports = {
