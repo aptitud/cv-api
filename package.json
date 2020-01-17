@@ -1,11 +1,11 @@
 {
   "name": "cv-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/app.js",
   "repository": "git@github.com:aptitud/cv-api.git",
   "author": "",
   "scripts": {
-    "debug": "nodemon index.js",
+    "dev": "nodemon src/app.js",
     "test": "jest"
   },
   "license": "MIT",

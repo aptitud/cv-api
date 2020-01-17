@@ -1,7 +1,7 @@
 require('dotenv').config()
 const Koa = require('koa')
 const Boom = require('@hapi/boom')
-const routes = require('./src/routes')
+const routes = require('./routes')
 
 const app = new Koa()
 app.use(async (ctx, next) => {
