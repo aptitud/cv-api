@@ -1,0 +1,899 @@
+{
+  "schema": {
+    "sys": {
+      "type": "Array"
+    },
+    "total": 8,
+    "skip": 0,
+    "limit": 100,
+    "items": [
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "cv",
+          "type": "ContentType",
+          "createdAt": "2020-01-17T08:53:28.306Z",
+          "updatedAt": "2020-01-17T11:55:55.541Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 20
+        },
+        "displayField": "name",
+        "name": "CV",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "image",
+            "name": "Image",
+            "type": "Link",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "linkType": "Asset"
+          },
+          {
+            "id": "title",
+            "name": "Title",
+            "type": "Symbol",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "assignments",
+            "name": "Assignments",
+            "type": "Array",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "items": {
+              "type": "Link",
+              "validations": [
+                {
+                  "linkContentType": ["assignment"]
+                }
+              ],
+              "linkType": "Entry"
+            }
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "skill",
+          "type": "ContentType",
+          "createdAt": "2020-01-17T09:15:50.436Z",
+          "updatedAt": "2020-01-17T09:16:41.786Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 4
+        },
+        "displayField": "name",
+        "name": "Skill",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "weight",
+            "name": "Weight",
+            "type": "Integer",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "assignment",
+          "type": "ContentType",
+          "createdAt": "2020-01-17T09:05:44.729Z",
+          "updatedAt": "2020-01-17T09:10:46.830Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 4
+        },
+        "displayField": "client",
+        "name": "Assignment",
+        "description": "",
+        "fields": [
+          {
+            "id": "client",
+            "name": "Client",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "roles",
+            "name": "Roles",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "startDate",
+            "name": "StartDate",
+            "type": "Date",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "endDate",
+            "name": "EndDate",
+            "type": "Date",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "description",
+            "name": "Description",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "techniques",
+            "name": "Techniques",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "socialIcon",
+          "type": "ContentType",
+          "createdAt": "2018-04-28T07:34:36.390Z",
+          "updatedAt": "2018-04-28T07:34:36.390Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 1
+        },
+        "displayField": "name",
+        "name": "SocialIcon",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "icon",
+            "name": "Icon",
+            "type": "Link",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false,
+            "linkType": "Asset"
+          },
+          {
+            "id": "link",
+            "name": "Link",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "contact",
+          "type": "ContentType",
+          "createdAt": "2018-04-27T19:34:49.124Z",
+          "updatedAt": "2018-04-27T19:34:49.124Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 1
+        },
+        "displayField": "name",
+        "name": "Contact",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "header",
+            "name": "Header",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "postalAddress",
+            "name": "PostalAddress",
+            "type": "Text",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "visitingAddress",
+            "name": "VisitingAddress",
+            "type": "Text",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "image",
+            "name": "Image",
+            "type": "Link",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "linkType": "Asset"
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "service",
+          "type": "ContentType",
+          "createdAt": "2018-01-26T08:45:53.008Z",
+          "updatedAt": "2018-04-27T09:57:22.337Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 4
+        },
+        "displayField": "name",
+        "name": "Service",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "url",
+            "name": "Url",
+            "type": "Symbol",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "fellow",
+          "type": "ContentType",
+          "createdAt": "2018-01-26T08:45:14.100Z",
+          "updatedAt": "2018-04-27T09:06:03.305Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 6
+        },
+        "displayField": "name",
+        "name": "Fellow",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "description",
+            "name": "Description",
+            "type": "Text",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "phone",
+            "name": "Phone",
+            "type": "Symbol",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "services",
+            "name": "Services",
+            "type": "Array",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "items": {
+              "type": "Link",
+              "validations": [
+                {
+                  "linkContentType": ["service"]
+                }
+              ],
+              "linkType": "Entry"
+            }
+          },
+          {
+            "id": "image",
+            "name": "Image",
+            "type": "Link",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "linkType": "Asset"
+          }
+        ]
+      },
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "page",
+          "type": "ContentType",
+          "createdAt": "2018-01-26T13:36:17.658Z",
+          "updatedAt": "2018-01-26T14:16:49.285Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 4
+        },
+        "displayField": "name",
+        "name": "Page",
+        "description": "",
+        "fields": [
+          {
+            "id": "name",
+            "name": "Name",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "header",
+            "name": "Header",
+            "type": "Symbol",
+            "localized": false,
+            "required": true,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "content",
+            "name": "Content",
+            "type": "Text",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "image",
+            "name": "Image",
+            "type": "Link",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "linkType": "Asset"
+          }
+        ]
+      }
+    ]
+  },
+  "locales": {
+    "sys": {
+      "type": "Array"
+    },
+    "total": 2,
+    "skip": 0,
+    "limit": 1000,
+    "items": [
+      {
+        "code": "sv",
+        "name": "Swedish",
+        "default": true,
+        "fallbackCode": null,
+        "sys": {
+          "id": "72pGqaeqAIKce9CBFbUPDs",
+          "type": "Locale",
+          "version": 1
+        }
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "default": false,
+        "fallbackCode": null,
+        "sys": {
+          "id": "2cB0ffdoZrFt8EPNTkgJZP",
+          "type": "Locale",
+          "version": 2
+        }
+      }
+    ]
+  },
+  "data": {
+    "sys": {
+      "type": "Array"
+    },
+    "total": 1,
+    "skip": 0,
+    "limit": 100,
+    "items": [
+      {
+        "sys": {
+          "space": {
+            "sys": {
+              "type": "Link",
+              "linkType": "Space",
+              "id": "kqhdnxbobtly"
+            }
+          },
+          "id": "356zsW4N3PmGU7DzhctIWr",
+          "type": "Entry",
+          "createdAt": "2020-01-17T09:11:48.123Z",
+          "updatedAt": "2020-01-17T10:02:17.384Z",
+          "environment": {
+            "sys": {
+              "id": "master",
+              "type": "Link",
+              "linkType": "Environment"
+            }
+          },
+          "revision": 4,
+          "contentType": {
+            "sys": {
+              "type": "Link",
+              "linkType": "ContentType",
+              "id": "cv"
+            }
+          }
+        },
+        "fields": {
+          "name": {
+            "sv": "Mikael Ahlinder"
+          },
+          "image": {
+            "sv": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Asset",
+                "id": "4G2QRII67m7ku2CHqpIsrb"
+              }
+            }
+          },
+          "title": {
+            "en": "Developer",
+            "sv": "Utvecklare"
+          },
+          "introduction": {
+            "sv": "Hej"
+          },
+          "languages": {
+            "sv": "C#"
+          },
+          "techniques": {
+            "sv": "ASP.NET"
+          },
+          "methods": {
+            "sv": "Scrum"
+          },
+          "assignments": {
+            "sv": [
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "12sNlalWDvjCFcsfSmnWrZ"
+                }
+              }
+            ]
+          },
+          "roleSkills": {
+            "sv": [
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "3LcKFau54RUzDKA8734n1U"
+                }
+              }
+            ]
+          },
+          "techniqueSkills": {
+            "sv": [
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "6OdclnlS5jjKmMFj2nVH9q"
+                }
+              }
+            ]
+          },
+          "methodSkills": {
+            "sv": [
+              {
+                "sys": {
+                  "type": "Link",
+                  "linkType": "Entry",
+                  "id": "76o1sOYVsdp1C41GwSwAQV"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "includes": {
+      "Entry": [
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "kqhdnxbobtly"
+              }
+            },
+            "id": "12sNlalWDvjCFcsfSmnWrZ",
+            "type": "Entry",
+            "createdAt": "2020-01-17T09:11:42.414Z",
+            "updatedAt": "2020-01-17T09:59:44.404Z",
+            "environment": {
+              "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+              }
+            },
+            "revision": 4,
+            "contentType": {
+              "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "assignment"
+              }
+            }
+          },
+          "fields": {
+            "client": {
+              "sv": "Wasa Kredit"
+            },
+            "roles": {
+              "sv": "Utvecklare"
+            },
+            "startDate": {
+              "sv": "2017-09-01"
+            },
+            "endDate": {
+              "sv": "2019-01-01"
+            },
+            "description": {
+              "en": "Description",
+              "sv": "Besk"
+            },
+            "techniques": {
+              "en": "ENGEL",
+              "sv": "SVENNE"
+            }
+          }
+        },
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "kqhdnxbobtly"
+              }
+            },
+            "id": "3LcKFau54RUzDKA8734n1U",
+            "type": "Entry",
+            "createdAt": "2020-01-17T09:19:22.572Z",
+            "updatedAt": "2020-01-17T09:19:22.572Z",
+            "environment": {
+              "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+              }
+            },
+            "revision": 1,
+            "contentType": {
+              "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "skill"
+              }
+            }
+          },
+          "fields": {
+            "name": {
+              "sv": "Front End"
+            },
+            "weight": {
+              "sv": 9
+            }
+          }
+        },
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "kqhdnxbobtly"
+              }
+            },
+            "id": "6OdclnlS5jjKmMFj2nVH9q",
+            "type": "Entry",
+            "createdAt": "2020-01-17T09:19:41.182Z",
+            "updatedAt": "2020-01-17T11:56:04.453Z",
+            "environment": {
+              "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+              }
+            },
+            "revision": 2,
+            "contentType": {
+              "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "skill"
+              }
+            }
+          },
+          "fields": {
+            "name": {
+              "en": "sesjarp",
+              "sv": "C#"
+            },
+            "weight": {
+              "sv": 3
+            }
+          }
+        },
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "kqhdnxbobtly"
+              }
+            },
+            "id": "76o1sOYVsdp1C41GwSwAQV",
+            "type": "Entry",
+            "createdAt": "2020-01-17T09:19:54.505Z",
+            "updatedAt": "2020-01-17T09:19:54.505Z",
+            "environment": {
+              "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+              }
+            },
+            "revision": 1,
+            "contentType": {
+              "sys": {
+                "type": "Link",
+                "linkType": "ContentType",
+                "id": "skill"
+              }
+            }
+          },
+          "fields": {
+            "name": {
+              "sv": "Scrum"
+            },
+            "weight": {
+              "sv": 7
+            }
+          }
+        }
+      ],
+      "Asset": [
+        {
+          "sys": {
+            "space": {
+              "sys": {
+                "type": "Link",
+                "linkType": "Space",
+                "id": "kqhdnxbobtly"
+              }
+            },
+            "id": "4G2QRII67m7ku2CHqpIsrb",
+            "type": "Asset",
+            "createdAt": "2019-12-06T20:23:39.086Z",
+            "updatedAt": "2019-12-06T20:23:39.086Z",
+            "environment": {
+              "sys": {
+                "id": "master",
+                "type": "Link",
+                "linkType": "Environment"
+              }
+            },
+            "revision": 1
+          },
+          "fields": {
+            "title": {
+              "sv": "T124A62R2-UQBRJP20G-dd550c9705d5-512"
+            },
+            "file": {
+              "sv": {
+                "url": "//images.ctfassets.net/kqhdnxbobtly/4G2QRII67m7ku2CHqpIsrb/22a2b2dcddc7e74d51c7ea6ade380aff/T124A62R2-UQBRJP20G-dd550c9705d5-512",
+                "details": {
+                  "size": 158609,
+                  "image": {
+                    "width": 512,
+                    "height": 512
+                  }
+                },
+                "fileName": "T124A62R2-UQBRJP20G-dd550c9705d5-512",
+                "contentType": "image/png"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
