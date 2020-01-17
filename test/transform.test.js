@@ -231,6 +231,8 @@ describe('When fecthing api data', () => {
     expect(result).toEqual([
       {
         name: 'Mikael Ahlinder',
+        url:
+          'https://app.contentful.com/spaces/kqhdnxbobtly/entries/356zsW4N3PmGU7DzhctIWr',
         sv: {
           title: 'Utvecklare',
           introduction: 'Introduktion',

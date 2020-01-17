@@ -17,7 +17,7 @@ const populateCache = async () => {
     }),
   ])
   const cvs = transform({ schema, locales, data })
-  for (const cv of transform({ schema, locales, data })) {
+  for (const cv of cvs) {
     cache.set(cv.name, cv, 600)
   }
 }

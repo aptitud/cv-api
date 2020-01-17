@@ -920,50 +920,6 @@
             }
           }
         }
-      ],
-      "Asset": [
-        {
-          "sys": {
-            "space": {
-              "sys": {
-                "type": "Link",
-                "linkType": "Space",
-                "id": "kqhdnxbobtly"
-              }
-            },
-            "id": "4G2QRII67m7ku2CHqpIsrb",
-            "type": "Asset",
-            "createdAt": "2019-12-06T20:23:39.086Z",
-            "updatedAt": "2019-12-06T20:23:39.086Z",
-            "environment": {
-              "sys": {
-                "id": "master",
-                "type": "Link",
-                "linkType": "Environment"
-              }
-            },
-            "revision": 1
-          },
-          "fields": {
-            "title": {
-              "sv": "T124A62R2-UQBRJP20G-dd550c9705d5-512"
-            },
-            "file": {
-              "sv": {
-                "url": "//images.ctfassets.net/kqhdnxbobtly/4G2QRII67m7ku2CHqpIsrb/22a2b2dcddc7e74d51c7ea6ade380aff/T124A62R2-UQBRJP20G-dd550c9705d5-512",
-                "details": {
-                  "size": 158609,
-                  "image": {
-                    "width": 512,
-                    "height": 512
-                  }
-                },
-                "fileName": "T124A62R2-UQBRJP20G-dd550c9705d5-512",
-                "contentType": "image/png"
-              }
-            }
-          }
-        }
       ]
     }
   }

@@ -52,6 +52,7 @@ const getItem = (item, schema, locales, data) => {
       return {
         ...acc,
         name: Object.values(values)[0],
+        url: `https://app.contentful.com/spaces/kqhdnxbobtly/entries/${item.sys.id}`,
       }
     }
     return {
@@ -70,9 +71,9 @@ const getItem = (item, schema, locales, data) => {
 }
 
 const transform = ({ schema, locales, data }) => {
-  return data.items.map(item =>
-    getItem(item, getSchema(schema, 'cv'), getLocales(locales), data),
-  )
+  const s = getSchema(schema, 'cv')
+  const l = getLocales(locales)
+  return data.items.map(item => getItem(item, s, l, data))
 }
 
 module.exports = {
