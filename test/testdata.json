@@ -19,7 +19,7 @@
           "id": "cv",
           "type": "ContentType",
           "createdAt": "2020-01-17T08:53:28.306Z",
-          "updatedAt": "2020-01-17T11:55:55.541Z",
+          "updatedAt": "2020-01-17T15:46:19.602Z",
           "environment": {
             "sys": {
               "id": "master",
@@ -27,7 +27,7 @@
               "linkType": "Environment"
             }
           },
-          "revision": 20
+          "revision": 22
         },
         "displayField": "name",
         "name": "CV",
@@ -43,19 +43,45 @@
             "omitted": false
           },
           {
-            "id": "image",
-            "name": "Image",
-            "type": "Link",
-            "localized": false,
-            "required": false,
-            "disabled": false,
-            "omitted": false,
-            "linkType": "Asset"
-          },
-          {
             "id": "title",
             "name": "Title",
             "type": "Symbol",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "introduction",
+            "name": "Introduction",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "languages",
+            "name": "Languages",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "techniques",
+            "name": "Techniques",
+            "type": "Text",
+            "localized": true,
+            "required": false,
+            "disabled": false,
+            "omitted": false
+          },
+          {
+            "id": "methods",
+            "name": "Methods",
+            "type": "Text",
             "localized": true,
             "required": false,
             "disabled": false,
@@ -74,6 +100,60 @@
               "validations": [
                 {
                   "linkContentType": ["assignment"]
+                }
+              ],
+              "linkType": "Entry"
+            }
+          },
+          {
+            "id": "roleSkills",
+            "name": "RoleSkills",
+            "type": "Array",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "items": {
+              "type": "Link",
+              "validations": [
+                {
+                  "linkContentType": ["skill"]
+                }
+              ],
+              "linkType": "Entry"
+            }
+          },
+          {
+            "id": "techniqueSkills",
+            "name": "TechniqueSkills",
+            "type": "Array",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "items": {
+              "type": "Link",
+              "validations": [
+                {
+                  "linkContentType": ["skill"]
+                }
+              ],
+              "linkType": "Entry"
+            }
+          },
+          {
+            "id": "methodSkills",
+            "name": "MethodSkills",
+            "type": "Array",
+            "localized": false,
+            "required": false,
+            "disabled": false,
+            "omitted": false,
+            "items": {
+              "type": "Link",
+              "validations": [
+                {
+                  "linkContentType": ["skill"]
                 }
               ],
               "linkType": "Entry"
@@ -608,21 +688,12 @@
           "name": {
             "sv": "Mikael Ahlinder"
           },
-          "image": {
-            "sv": {
-              "sys": {
-                "type": "Link",
-                "linkType": "Asset",
-                "id": "4G2QRII67m7ku2CHqpIsrb"
-              }
-            }
-          },
           "title": {
             "en": "Developer",
             "sv": "Utvecklare"
           },
           "introduction": {
-            "sv": "Hej"
+            "sv": "Introduktion"
           },
           "languages": {
             "sv": "C#"
@@ -726,11 +797,11 @@
             },
             "description": {
               "en": "Description",
-              "sv": "Besk"
+              "sv": "Beskrivning"
             },
             "techniques": {
-              "en": "ENGEL",
-              "sv": "SVENNE"
+              "en": "Web development",
+              "sv": "Webbutveckling"
             }
           }
         },
@@ -803,7 +874,7 @@
           },
           "fields": {
             "name": {
-              "en": "sesjarp",
+              "en": "C Sharp",
               "sv": "C#"
             },
             "weight": {

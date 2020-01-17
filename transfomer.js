@@ -1,8 +1,8 @@
 const getLocales = locales => {
-  return locales.items.map(item => ({ code: item.code, name: item.name }))
+  return locales.items.map(({ code, name }) => ({ code, name }))
 }
 
-const getSchema = (schema, nodeType = 'cv') => {
+const getSchema = (schema, nodeType) => {
   return {
     fields: schema.items
       .find(p => p.sys.id === nodeType)
@@ -37,7 +37,7 @@ const resolveValue = (node, values, locale, data) => {
     return node.fields.reduce(
       (acc, field) => ({
         ...acc,
-        [field.name]: resolveValue(field, asset.fields[field.id], locale, data),
+        [field.id]: resolveValue(field, asset.fields[field.id], locale, data),
       }),
       {},
     )
@@ -61,7 +61,7 @@ const getItem = (item, schema, locales, data) => {
           ...locacc,
           [locale]: {
             ...acc[locale],
-            [node.name]: resolveValue(node, values, locale, data),
+            [node.id]: resolveValue(node, values, locale, data),
           },
         }
       }, {}),
@@ -71,7 +71,7 @@ const getItem = (item, schema, locales, data) => {
 
 const transform = ({ schema, locales, data }) => {
   return data.items.map(item =>
-    getItem(item, getSchema(schema), getLocales(locales), data),
+    getItem(item, getSchema(schema, 'cv'), getLocales(locales), data),
   )
 }
 
