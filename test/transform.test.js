@@ -1,5 +1,5 @@
 const testdata = require('./testdata')
-const { getLocales, getSchema, transform } = require('../src/transfomer')
+const { getLocales, getSchema, transform } = require('../server/transfomer')
 
 describe('When fecthing api data', () => {
   it('should transform locales', () => {

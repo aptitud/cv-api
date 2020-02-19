@@ -1,10 +1,12 @@
-# 💥 **cv-api**
+# 💥 **cv**
 
 ## **Start dev environment**
 
 ```shell
 $ cp template.env .env
-$ yarn && yarn dev
+$ yarn
+$ yarn client
+$ yarn server
 ```
 
 ## **Running tests**

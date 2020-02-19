@@ -1,4 +1,4 @@
-const router = require('koa-router')()
+const router = require('koa-router')({ prefix: '/api' })
 const NodeCache = require('node-cache')
 const { transform } = require('./transfomer')
 const contentful = require('request-promise-native').defaults({
