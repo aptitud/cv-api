@@ -18,7 +18,7 @@ const populateCache = async () => {
   ])
   const cvs = transform({ schema, locales, data })
   for (const cv of cvs) {
-    cache.set(cv.name, cv, 600)
+    cache.set(cv.slug, cv, 600)
   }
 }
 
@@ -26,18 +26,18 @@ router.get('/', async ctx => {
   if (!cache.keys().length) {
     await populateCache()
   }
-  ctx.body = cache.keys().map(name => ({
-    name,
-    url: ctx.request.origin + router.url('cv', { name }),
+  ctx.body = cache.keys().map(slug => ({
+    slug,
+    url: router.url('cv', { slug }),
   }))
 })
 
-router.get('cv', '/:name', async ctx => {
-  const { name } = ctx.params
-  if (!cache.has(name)) {
+router.get('cv', '/:slug', async ctx => {
+  const { slug } = ctx.params
+  if (!cache.has(slug)) {
     await populateCache()
   }
-  const cv = cache.get(name)
+  const cv = cache.get(slug)
   ctx.assert(cv, 404)
   ctx.body = cv
 })

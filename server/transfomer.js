@@ -1,3 +1,5 @@
+const slugify = require('slugify')
+
 const getLocales = locales => {
   return locales.items.map(({ code, name }) => ({ code, name }))
 }
@@ -49,9 +51,11 @@ const getItem = (item, schema, locales, data) => {
   return schema.fields.reduce((acc, node) => {
     const values = item.fields[node.id]
     if (node.id === 'name') {
+      const name = Object.values(values)[0]
       return {
         ...acc,
-        name: Object.values(values)[0],
+        name,
+        slug: slugify(name, { replacement: '-', lower: true }),
         url: `https://app.contentful.com/spaces/kqhdnxbobtly/entries/${item.sys.id}`,
       }
     }
