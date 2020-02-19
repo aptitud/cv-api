@@ -4,10 +4,7 @@ const { getLocales, getSchema, transform } = require('../server/transfomer')
 describe('When fecthing api data', () => {
   it('should transform locales', () => {
     const result = getLocales(testdata.locales)
-    expect(result).toEqual([
-      { name: 'Swedish', code: 'sv' },
-      { name: 'English', code: 'en' },
-    ])
+    expect(result).toEqual(['sv', 'en'])
   })
   it('should transform schema', () => {
     const result = getSchema(testdata.schema, 'cv')
@@ -231,79 +228,77 @@ describe('When fecthing api data', () => {
     expect(result).toEqual([
       {
         name: 'Mikael Ahlinder',
-        slug: 'mikael-ahlinder',
-        url:
-          'https://app.contentful.com/spaces/kqhdnxbobtly/entries/356zsW4N3PmGU7DzhctIWr',
-        sv: {
-          title: 'Utvecklare',
-          introduction: 'Introduktion',
-          languages: 'C#',
-          techniques: 'ASP.NET',
-          methods: 'Scrum',
-          assignments: [
-            {
-              client: 'Wasa Kredit',
-              roles: 'Utvecklare',
-              startDate: '2017-09-01',
-              endDate: '2019-01-01',
-              description: 'Beskrivning',
-              techniques: 'Webbutveckling',
-            },
-          ],
-          roleSkills: [
-            {
-              name: 'Front End',
-              weight: 9,
-            },
-          ],
-          techniqueSkills: [
-            {
-              name: 'C#',
-              weight: 3,
-            },
-          ],
-          methodSkills: [
-            {
-              name: 'Scrum',
-              weight: 7,
-            },
-          ],
-        },
-        en: {
-          title: 'Developer',
-          introduction: null,
-          languages: null,
-          techniques: null,
-          methods: null,
-          assignments: [
-            {
-              client: 'Wasa Kredit',
-              roles: null,
-              startDate: '2017-09-01',
-              endDate: '2019-01-01',
-              description: 'Description',
-              techniques: 'Web development',
-            },
-          ],
-          roleSkills: [
-            {
-              name: null,
-              weight: 9,
-            },
-          ],
-          techniqueSkills: [
-            {
-              name: 'C Sharp',
-              weight: 3,
-            },
-          ],
-          methodSkills: [
-            {
-              name: null,
-              weight: 7,
-            },
-          ],
-        },
+        slug: 'mikael-ahlinder-sv',
+        title: 'Utvecklare',
+        introduction: 'Introduktion',
+        languages: 'C#',
+        techniques: 'ASP.NET',
+        methods: 'Scrum',
+        assignments: [
+          {
+            client: 'Wasa Kredit',
+            roles: 'Utvecklare',
+            startDate: '2017-09-01',
+            endDate: '2019-01-01',
+            description: 'Beskrivning',
+            techniques: 'Webbutveckling',
+          },
+        ],
+        roleSkills: [
+          {
+            name: 'Front End',
+            weight: 9,
+          },
+        ],
+        techniqueSkills: [
+          {
+            name: 'C#',
+            weight: 3,
+          },
+        ],
+        methodSkills: [
+          {
+            name: 'Scrum',
+            weight: 7,
+          },
+        ],
+      },
+      {
+        name: 'Mikael Ahlinder',
+        slug: 'mikael-ahlinder-en',
+        title: 'Developer',
+        introduction: null,
+        languages: null,
+        techniques: null,
+        methods: null,
+        assignments: [
+          {
+            client: 'Wasa Kredit',
+            roles: null,
+            startDate: '2017-09-01',
+            endDate: '2019-01-01',
+            description: 'Description',
+            techniques: 'Web development',
+          },
+        ],
+        roleSkills: [
+          {
+            name: null,
+            weight: 9,
+          },
+        ],
+        techniqueSkills: [
+          {
+            name: 'C Sharp',
+            weight: 3,
+          },
+        ],
+        methodSkills: [
+          {
+            name: null,
+            weight: 7,
+          },
+        ],
       },
     ])
   })

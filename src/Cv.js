@@ -5,23 +5,22 @@ import Intro from './Intro'
 import Skills from './Skills'
 
 export default withRouter(({ match }) => {
-  const [consultant, setConsultant] = useState(null)
-  const { slug, language } = match.params
+  const [data, setData] = useState(null)
+  const { slug } = match.params
   useEffect(() => {
     if (!slug) {
       return
     }
     fetch(`/api/${slug}`)
       .then(x => x.json())
-      .then(x => setConsultant(x))
+      .then(x => setData(x))
   }, [slug])
-  if (!consultant) {
+  if (!data) {
     return null
   }
-  const data = consultant[language]
   return (
     <section>
-      <h1>{consultant.name}</h1>
+      <h1>{data.name}</h1>
       <Intro {...data} />
       <h2>Uppdrag</h2>
       {data.assignments.map((x, i) => (

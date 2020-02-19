@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom'
-import Consultant from './Consultant'
+import Cv from './Cv'
 
 export default () => {
-  const [consultants, setConsultants] = useState([])
+  const [cvs, setCvs] = useState([])
   useEffect(() => {
     fetch('/api')
       .then(x => x.json())
-      .then(x => setConsultants(x))
+      .then(x => setCvs(x))
   }, [])
+  console.log(cvs)
   return (
     <Router>
       <Switch>
-        <Route path="/consultant/:slug/:language">
-          <Consultant />
+        <Route path="/cv/:slug">
+          <Cv />
         </Route>
         <Route>
-          {consultants.map(({ slug }) => (
-            <Link key={slug} to={`/consultant/${slug}/sv`}>
+          {cvs.map(slug => (
+            <Link key={slug} to={`/cv/${slug}`}>
               {slug}
             </Link>
           ))}

@@ -1,7 +1,7 @@
 const slugify = require('slugify')
 
 const getLocales = locales => {
-  return locales.items.map(({ code, name }) => ({ code, name }))
+  return locales.items.map(({ code }) => code)
 }
 
 const getSchema = (schema, nodeType) => {
@@ -48,36 +48,32 @@ const resolveValue = (node, values, locale, data) => {
 }
 
 const getItem = (item, schema, locales, data) => {
-  return schema.fields.reduce((acc, node) => {
-    const values = item.fields[node.id]
-    if (node.id === 'name') {
-      const name = Object.values(values)[0]
+  return locales.map(locale =>
+    schema.fields.reduce((acc, node) => {
+      const values = item.fields[node.id]
+      if (node.id === 'name') {
+        const name = Object.values(values)[0]
+        return {
+          ...acc,
+          name,
+          slug: slugify(name + '-' + locale, { replacement: '-', lower: true }),
+        }
+      }
       return {
         ...acc,
-        name,
-        slug: slugify(name, { replacement: '-', lower: true }),
-        url: `https://app.contentful.com/spaces/kqhdnxbobtly/entries/${item.sys.id}`,
+        [node.id]: resolveValue(node, values, locale, data),
       }
-    }
-    return {
-      ...acc,
-      ...locales.reduce((locacc, { code: locale }) => {
-        return {
-          ...locacc,
-          [locale]: {
-            ...acc[locale],
-            [node.id]: resolveValue(node, values, locale, data),
-          },
-        }
-      }, {}),
-    }
-  }, {})
+    }, {}),
+  )
 }
 
 const transform = ({ schema, locales, data }) => {
   const s = getSchema(schema, 'cv')
   const l = getLocales(locales)
-  return data.items.map(item => getItem(item, s, l, data))
+  return data.items.reduce(
+    (acc, item) => [...acc, ...getItem(item, s, l, data)],
+    [],
+  )
 }
 
 module.exports = {

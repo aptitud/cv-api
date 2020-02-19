@@ -26,13 +26,10 @@ router.get('/', async ctx => {
   if (!cache.keys().length) {
     await populateCache()
   }
-  ctx.body = cache.keys().map(slug => ({
-    slug,
-    url: router.url('cv', { slug }),
-  }))
+  ctx.body = cache.keys().map(slug => slug)
 })
 
-router.get('cv', '/:slug', async ctx => {
+router.get('/:slug', async ctx => {
   const { slug } = ctx.params
   if (!cache.has(slug)) {
     await populateCache()
