@@ -1,5 +1,6 @@
 const router = require('koa-router')({ prefix: '/api' })
 const NodeCache = require('node-cache')
+const Boom = require('@hapi/boom')
 const { transform } = require('./transfomer')
 const contentful = require('request-promise-native').defaults({
   json: true,
@@ -8,7 +9,10 @@ const contentful = require('request-promise-native').defaults({
 })
 
 const cache = new NodeCache()
-const populateCache = async () => {
+const getCvs = async () => {
+  if (cache.keys().length) {
+    return cache.get('cvs')
+  }
   const [schema, locales, data] = await Promise.all([
     contentful('/content_types'),
     contentful('/locales'),
@@ -17,25 +21,22 @@ const populateCache = async () => {
     }),
   ])
   const cvs = transform({ schema, locales, data })
-  for (const cv of cvs) {
-    cache.set(cv.slug, cv, 600)
-  }
+  cache.set('cvs', cvs, 600)
+  return cvs
 }
 
 router.get('/', async ctx => {
-  if (!cache.keys().length) {
-    await populateCache()
-  }
-  ctx.body = cache.keys().map(slug => slug)
+  const cvs = await getCvs()
+  ctx.body = cvs.map(({ slug, name, locale }) => ({ slug, name, locale }))
 })
 
 router.get('/:slug', async ctx => {
   const { slug } = ctx.params
-  if (!cache.has(slug)) {
-    await populateCache()
+  const cvs = await getCvs()
+  const cv = cvs.find(x => x.slug === slug)
+  if (!cv) {
+    throw Boom.notFound('kalle', 'dsfsd')
   }
-  const cv = cache.get(slug)
-  ctx.assert(cv, 404)
   ctx.body = cv
 })
 

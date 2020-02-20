@@ -229,6 +229,7 @@ describe('When fecthing api data', () => {
       {
         name: 'Mikael Ahlinder',
         slug: 'mikael-ahlinder-sv',
+        locale: 'sv',
         title: 'Utvecklare',
         introduction: 'Introduktion',
         languages: 'C#',
@@ -266,6 +267,7 @@ describe('When fecthing api data', () => {
       {
         name: 'Mikael Ahlinder',
         slug: 'mikael-ahlinder-en',
+        locale: 'en',
         title: 'Developer',
         introduction: null,
         languages: null,

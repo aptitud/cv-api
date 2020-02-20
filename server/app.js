@@ -9,12 +9,20 @@ const app = new Koa()
 app.use(cors())
 app.use(serve(`${process.cwd()}/build`))
 app.use(async (ctx, next) => {
-  await next().catch(err => {
-    ctx.body = Boom.badImplementation(null, {
-      message: err.message,
-      stack: err.stack,
+  await next()
+    .then(() => ctx.assert(ctx.status < 400, ctx.status))
+    .catch(err => {
+      const error = err.isBoom
+        ? err
+        : err.status
+        ? Boom.boomify(err, { statusCode: err.status })
+        : Boom.badImplementation(null, {
+            message: err.message,
+            stack: err.stack,
+          })
+      ctx.body = error.output.payload
+      ctx.status = error.output.statusCode
     })
-  })
 })
 app.use(routes)
 app.listen(5555)

@@ -56,7 +56,11 @@ const getItem = (item, schema, locales, data) => {
         return {
           ...acc,
           name,
-          slug: slugify(name + '-' + locale, { replacement: '-', lower: true }),
+          locale,
+          slug: slugify(name + '-' + locale, {
+            replacement: '-',
+            lower: true,
+          }),
         }
       }
       return {

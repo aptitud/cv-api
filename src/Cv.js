@@ -4,6 +4,15 @@ import Assignment from './Assignment'
 import Intro from './Intro'
 import Skills from './Skills'
 
+const getStringsForLocale = locale => {
+  return Object.entries({
+    assignments: {
+      sv: 'Uppdrag',
+      en: 'Assignments',
+    },
+  }).reduce((acc, [k, v]) => ({ ...acc, [k]: v[locale] }), {})
+}
+
 export default withRouter(({ match }) => {
   const [data, setData] = useState(null)
   const { slug } = match.params
@@ -18,11 +27,12 @@ export default withRouter(({ match }) => {
   if (!data) {
     return null
   }
+  const strings = getStringsForLocale(data.locale)
   return (
     <section>
       <h1>{data.name}</h1>
       <Intro {...data} />
-      <h2>Uppdrag</h2>
+      <h2>{strings.assignments}</h2>
       {data.assignments.map((x, i) => (
         <Assignment key={i} {...x} />
       ))}

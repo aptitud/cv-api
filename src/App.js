@@ -9,7 +9,6 @@ export default () => {
       .then(x => x.json())
       .then(x => setCvs(x))
   }, [])
-  console.log(cvs)
   return (
     <Router>
       <Switch>
@@ -17,9 +16,9 @@ export default () => {
           <Cv />
         </Route>
         <Route>
-          {cvs.map(slug => (
+          {cvs.map(({ slug, name, locale }) => (
             <Link key={slug} to={`/cv/${slug}`}>
-              {slug}
+              {name} - {locale}
             </Link>
           ))}
         </Route>
