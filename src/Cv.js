@@ -21,12 +21,14 @@ export default withRouter(({ match }) => {
       return
     }
     fetch(`/api/${slug}`)
-      .then(x => x.json())
+      .then(x => (x.ok ? x.json() : Promise.reject()))
       .then(x => setData(x))
+      .catch(() => setData(null))
   }, [slug])
   if (!data) {
     return null
   }
+  console.log(data)
   const strings = getStringsForLocale(data.locale)
   return (
     <section>
