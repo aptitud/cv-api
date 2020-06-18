@@ -1,4 +1,5 @@
 import React from 'react'
+import Paragraphs from './Paragraphs'
 
 export default ({
   client,
@@ -7,13 +8,21 @@ export default ({
   endDate,
   description,
   techniques,
-}) => (
-  <section>
-    <h3>{client}</h3>
-    <p>{roles}</p>
-    <p>{startDate}</p>
-    <p>{endDate}</p>
-    <p>{description}</p>
-    <p>{techniques}</p>
-  </section>
-)
+}) => {
+  const [fromYear, toYear] = getYears(startDate, endDate)
+  return (
+    <section>
+      <h3>{client}</h3>
+      <p>{roles}</p>
+      <p>
+        {fromYear === toYear || !toYear ? fromYear : `${fromYear}–${toYear}`}
+      </p>
+      <Paragraphs text={description} />
+      <p>{techniques}</p>
+    </section>
+  )
+}
+
+const getYears = (...dateStrings) => {
+  return dateStrings.map(x => (x ? x.substring(0, 4) : null))
+}

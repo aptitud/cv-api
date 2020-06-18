@@ -30,11 +30,15 @@ export default () => {
             <Cv />
           </Route>
           <Route>
-            {cvs.map(({ slug, name, locale }) => (
-              <Link key={slug} to={`/cv/${slug}`}>
-                {name} - {locale}
-              </Link>
-            ))}
+            <ul>
+              {cvs.map(({ slug, name, locale }) => (
+                <li key={slug}>
+                  <Link key={slug} to={`/cv/${slug}`}>
+                    {name} - {locale}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </Route>
         </Switch>
       </Router>

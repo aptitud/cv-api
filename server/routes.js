@@ -9,6 +9,7 @@ const contentful = require('request-promise-native').defaults({
 })
 
 const cache = new NodeCache()
+
 const getCvs = async () => {
   if (cache.keys().length) {
     return cache.get('cvs')
@@ -26,8 +27,13 @@ const getCvs = async () => {
 }
 
 router.get('/', async ctx => {
-  const cvs = await getCvs()
-  ctx.body = cvs.map(({ slug, name, locale }) => ({ slug, name, locale }))
+  const cvs = await getCvs().catch(err => {
+    console.error(err)
+    throw err
+  })
+  ctx.body = cvs
+    .map(({ slug, name, locale }) => ({ slug, name, locale }))
+    .sort((a, b) => a.name.localeCompare(b.name))
 })
 
 router.get('/:slug', async ctx => {

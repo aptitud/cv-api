@@ -15,7 +15,7 @@ const getStringsForLocale = locale => {
 }
 
 const Cv = styled.div`
-  background-color: #ccff00;
+  background-color: #ffffff;
 `
 
 export default withRouter(({ match }) => {
@@ -39,7 +39,7 @@ export default withRouter(({ match }) => {
       <h1>{data.name}</h1>
       <Intro {...data} />
       <h2>{strings.assignments}</h2>
-      {data.assignments.map((x, i) => (
+      {data.assignments.sort(sortAssignment).map((x, i) => (
         <Assignment key={i} {...x} />
       ))}
       <Skills skills={data.roleSkills} color="red" />
@@ -48,3 +48,19 @@ export default withRouter(({ match }) => {
     </Cv>
   )
 })
+
+const sortAssignment = (a, b) => {
+  const aBeforeB = -1
+  const bBeforeA = 1
+  if (a.startDate === b.startDate) {
+    if (a.endDate === undefined) {
+      return b.endDate === undefined ? 0 : aBeforeB
+    }
+    return a.endDate === b.endDate
+      ? 0
+      : a.endDate < b.endDate
+      ? bBeforeA
+      : aBeforeB
+  }
+  return a.startDate < b.startDate ? bBeforeA : aBeforeB
+}

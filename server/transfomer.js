@@ -1,5 +1,14 @@
 const slugify = require('slugify')
 
+const transform = ({ schema, locales, data }) => {
+  const s = getSchema(schema, 'cv')
+  const l = getLocales(locales)
+  return data.items.reduce(
+    (acc, item) => [...acc, ...getItem(item, s, l, data)],
+    [],
+  )
+}
+
 const getLocales = locales => {
   return locales.items.map(({ code }) => code)
 }
@@ -24,29 +33,6 @@ const getSchema = (schema, nodeType) => {
   }
 }
 
-const resolveValue = (node, values, locale, data) => {
-  if (!values) {
-    return null
-  }
-  const resolvedValue = node.localized
-    ? values[locale]
-    : Object.values(values)[0]
-  if (Array.isArray(resolvedValue)) {
-    return resolvedValue.map(value => resolveValue(node, value, locale, data))
-  }
-  if (node.link) {
-    const asset = data.includes.Entry.find(x => x.sys.id === values.sys.id)
-    return node.fields.reduce(
-      (acc, field) => ({
-        ...acc,
-        [field.id]: resolveValue(field, asset.fields[field.id], locale, data),
-      }),
-      {},
-    )
-  }
-  return resolvedValue || null
-}
-
 const getItem = (item, schema, locales, data) => {
   return locales.map(locale =>
     schema.fields.reduce((acc, node) => {
@@ -63,21 +49,38 @@ const getItem = (item, schema, locales, data) => {
           }),
         }
       }
+      const value = resolveValue(node, values, locale, data)
       return {
         ...acc,
-        [node.id]: resolveValue(node, values, locale, data),
+        [node.id]: value ? value : node.type === 'Array' ? [] : value,
       }
     }, {}),
   )
 }
 
-const transform = ({ schema, locales, data }) => {
-  const s = getSchema(schema, 'cv')
-  const l = getLocales(locales)
-  return data.items.reduce(
-    (acc, item) => [...acc, ...getItem(item, s, l, data)],
-    [],
-  )
+const resolveValue = (node, values, locale, data) => {
+  if (!values) {
+    return null
+  }
+  const resolvedValue = node.localized
+    ? values[locale]
+    : Object.values(values)[0]
+  if (Array.isArray(resolvedValue)) {
+    return resolvedValue.map(value => resolveValue(node, value, locale, data))
+  }
+  if (node.link) {
+    const asset = data.includes.Entry.find(x => x.sys.id === values.sys.id)
+    if (!asset) {
+      return null
+    }
+    return node.fields.reduce((acc, field) => {
+      return {
+        ...acc,
+        [field.id]: resolveValue(field, asset.fields[field.id], locale, data),
+      }
+    }, {})
+  }
+  return resolvedValue || null
 }
 
 module.exports = {

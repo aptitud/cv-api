@@ -1,11 +1,20 @@
 import React from 'react'
+import Paragraphs from './Paragraphs'
 
 export default ({ title, introduction, languages, techniques, methods }) => (
   <section>
-    <p>{title}</p>
-    <p>{introduction}</p>
-    <p>{languages}</p>
-    <p>{techniques}</p>
-    <p>{methods}</p>
+    <p>
+      <strong>{title}</strong>
+    </p>
+    <Paragraphs text={introduction} />
+    <p>
+      <strong>Languages:</strong> {languages}
+    </p>
+    <p>
+      <strong>Techniques:</strong> {techniques}
+    </p>
+    <p>
+      <strong>Methods:</strong> {methods}
+    </p>
   </section>
 )
