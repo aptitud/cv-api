@@ -5,9 +5,21 @@ import { Global, css } from '@emotion/core'
 
 export default () => {
   const [cvs, setCvs] = useState([])
+  const [loggedIn, setLoggedIn] = useState(true)
   useEffect(() => {
     fetch('/api')
-      .then(x => x.json())
+      .then(x => {
+        switch (x.status) {
+          case 200:
+            return x.json()
+          case 403:
+            setLoggedIn(false)
+            return []
+          default:
+            console.log(x)
+            return []
+        }
+      })
       .then(x => setCvs(x))
   }, [])
   return (
@@ -25,6 +37,7 @@ export default () => {
         `}
       />
       <Router>
+        {!loggedIn && <a href="/api/auth/login">Log in</a>}
         <Switch>
           <Route path="/cv/:slug">
             <Cv />

@@ -2,6 +2,10 @@ const router = require('koa-router')({ prefix: '/api' })
 const NodeCache = require('node-cache')
 const Boom = require('@hapi/boom')
 const { transform } = require('./transfomer')
+const crypto = require('crypto')
+const querystring = require('querystring')
+const axios = require('axios')
+const jwt = require('jsonwebtoken')
 const contentful = require('request-promise-native').defaults({
   json: true,
   baseUrl: 'https://cdn.contentful.com/spaces/kqhdnxbobtly/environments/master',
@@ -11,8 +15,9 @@ const contentful = require('request-promise-native').defaults({
 const cache = new NodeCache()
 
 const getCvs = async () => {
-  if (cache.keys().length) {
-    return cache.get('cvs')
+  const cachedItem = cache.get('cvs')
+  if (cachedItem) {
+    return cachedItem
   }
   const [schema, locales, data] = await Promise.all([
     contentful('/content_types'),
@@ -26,7 +31,34 @@ const getCvs = async () => {
   return cvs
 }
 
-router.get('/', async ctx => {
+const getGoogleDiscovery = async () => {
+  const cachedItem = cache.get('google-openid')
+  if (cachedItem) {
+    return cachedItem
+  }
+  const { data } = await axios.get(
+    'https://accounts.google.com/.well-known/openid-configuration',
+  )
+  cache.set('google-openid', data)
+  return data
+}
+
+const authenticate = async (ctx, next) => {
+  const token = ctx.cookies.get('idtoken')
+  if (!token) {
+    ctx.throw(403, 'No JWT')
+    return
+  }
+  try {
+    jwt.verify(token, process.env.SECRET)
+  } catch (err) {
+    ctx.throw(403, 'Invalid JWT')
+    return
+  }
+  return next()
+}
+
+router.get('/', authenticate, async ctx => {
   const cvs = await getCvs().catch(err => {
     console.error(err)
     throw err
@@ -36,7 +68,7 @@ router.get('/', async ctx => {
     .sort((a, b) => a.name.localeCompare(b.name))
 })
 
-router.get('/:slug', async ctx => {
+router.get('/:slug', authenticate, async ctx => {
   const { slug } = ctx.params
   const cvs = await getCvs()
   const cv = cvs.find(x => x.slug === slug)
@@ -45,5 +77,80 @@ router.get('/:slug', async ctx => {
   }
   ctx.body = cv
 })
+
+router.get('/auth/login', async ctx => {
+  const nonce = crypto.randomBytes(16).toString('base64')
+  const randomValue = crypto.randomBytes(16).toString('base64')
+  const hash = hashHmac(process.env.SECRET, randomValue)
+  const params = {
+    response_type: 'code',
+    client_id: process.env.GOOGLE_CLIENT_ID,
+    scope: 'openid email',
+    redirect_uri: `${process.env.URL}/api/auth/callback`,
+    state: `${randomValue}:${hash}`,
+    nonce,
+    hd: 'aptitud.se',
+  }
+  const query = querystring.stringify(params)
+  const authorizationEndpoint = await getGoogleDiscovery().then(
+    x => x.authorization_endpoint,
+  )
+  ctx.set('location', `${authorizationEndpoint}?${query}`)
+  ctx.status = 307
+  ctx.body = 'ok'
+})
+
+router.get('/auth/logout', async ctx => {
+  ctx.cookies.set('idtoken', '', { maxAge: 0 })
+  ctx.set('location', process.env.URL)
+  ctx.status = 307
+  ctx.body = 'ok'
+})
+
+router.get('/auth/callback', async ctx => {
+  const { state, code } = ctx.query
+  const [receivedRandomValue, receivedHash] = state.split(':')
+  const hash = hashHmac(process.env.SECRET, receivedRandomValue)
+  if (hash !== receivedHash) {
+    ctx.throw(403, 'HMAC validation failed')
+  }
+  const selfUrl = process.env.URL
+  const tokenEndpoint = await getGoogleDiscovery().then(x => x.token_endpoint)
+  const { data } = await axios.post(
+    tokenEndpoint,
+    querystring.stringify({
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${selfUrl}/api/auth/callback`,
+      grant_type: 'authorization_code',
+    }),
+    {
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+      },
+    },
+  )
+  const idToken = jwt.decode(data.id_token)
+  if (!idToken.hd === 'aptitud.se') {
+    ctx.throw(403, 'Must belong to Aptitud organization')
+  }
+  const newJwt = jwt.sign({ email: idToken.email }, process.env.SECRET, {
+    expiresIn: 60 * 60 * 24,
+  })
+  ctx.cookies.set('idtoken', newJwt, {
+    secure: selfUrl.startsWith('https'),
+    httpOnly: true,
+  })
+  ctx.set('location', selfUrl)
+  ctx.status = 303
+  ctx.body = 'ok'
+})
+
+const hashHmac = (secret, str) => {
+  const hmac = crypto.createHmac('sha256', secret)
+  hmac.update(str)
+  return hmac.digest('base64')
+}
 
 module.exports = router.routes()

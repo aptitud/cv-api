@@ -12,6 +12,7 @@ app.use(async (ctx, next) => {
   await next()
     .then(() => ctx.assert(ctx.status < 400, ctx.status))
     .catch(err => {
+      console.error(err.stack)
       const error = err.isBoom
         ? err
         : err.status
