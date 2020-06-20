@@ -1,15 +1,15 @@
 const router = require('koa-router')({ prefix: '/api' })
 const NodeCache = require('node-cache')
 const Boom = require('@hapi/boom')
-const { transform } = require('./transfomer')
 const crypto = require('crypto')
 const querystring = require('querystring')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
-const contentful = require('request-promise-native').defaults({
-  json: true,
-  baseUrl: 'https://cdn.contentful.com/spaces/kqhdnxbobtly/environments/master',
-  auth: { bearer: process.env.CF_TOKEN },
+const { transform } = require('./transfomer')
+
+const contentful = axios.create({
+  baseURL: 'https://cdn.contentful.com/spaces/kqhdnxbobtly/environments/master',
+  headers: { authorization: `Bearer ${process.env.CF_TOKEN}` },
 })
 
 const cache = new NodeCache()
@@ -20,12 +20,13 @@ const getCvs = async () => {
     return cachedItem
   }
   const [schema, locales, data] = await Promise.all([
-    contentful('/content_types'),
-    contentful('/locales'),
+    contentful('/content_types').then(x => x.data),
+    contentful('/locales').then(x => x.data),
     contentful('/entries', {
-      qs: { include: 2, content_type: 'cv', locale: '*' },
-    }),
+      params: { include: 2, content_type: 'cv', locale: '*' },
+    }).then(x => x.data),
   ])
+  console.log(schema, locales, data)
   const cvs = transform({ schema, locales, data })
   cache.set('cvs', cvs, 600)
   return cvs
