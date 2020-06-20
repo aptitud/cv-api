@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import Assignment from './Assignment'
 import Intro from './Intro'
 import Skills from './Skills'
+import Paragraphs from './Paragraphs'
 import styled from '@emotion/styled'
 
 const getStringsForLocale = locale => {
@@ -10,6 +11,14 @@ const getStringsForLocale = locale => {
     assignments: {
       sv: 'Uppdrag',
       en: 'Assignments',
+    },
+    education: {
+      sv: 'Utbildning',
+      en: 'Education',
+    },
+    courses: {
+      sv: 'Kurser',
+      en: 'Courses',
     },
   }).reduce((acc, [k, v]) => ({ ...acc, [k]: v[locale] }), {})
 }
@@ -42,6 +51,18 @@ export default withRouter(({ match }) => {
       {data.assignments.sort(sortAssignment).map((x, i) => (
         <Assignment key={i} {...x} />
       ))}
+      {data.education && (
+        <>
+          <h2>{strings.education}</h2>
+          <Paragraphs text={data.education} />
+        </>
+      )}
+      {data.courses && (
+        <>
+          <h2>{strings.courses}</h2>
+          <Paragraphs text={data.courses} />
+        </>
+      )}
       <Skills skills={data.roleSkills} color="red" />
       <Skills skills={data.techniqueSkills} color="blue" />
       <Skills skills={data.methodSkills} color="green" />
