@@ -3,12 +3,19 @@ const Koa = require('koa')
 const Boom = require('@hapi/boom')
 const cors = require('kcors')
 const serve = require('koa-static')
+const send = require('koa-send')
 const routes = require('./routes')
 
 const app = new Koa()
 app.proxy = true
 app.use(cors())
 app.use(serve(`${process.cwd()}/build`))
+app.use(async (ctx, next) => {
+  if (ctx.path.startsWith('/cv')) {
+    return send(ctx, './build/index.html')
+  }
+  return next()
+})
 app.use(async (ctx, next) => {
   await next()
     .then(() => ctx.assert(ctx.status < 400, ctx.status))
