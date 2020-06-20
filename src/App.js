@@ -37,7 +37,11 @@ export default () => {
         `}
       />
       <Router>
-        {!loggedIn && <a href="/api/auth/login">Log in</a>}
+        {loggedIn ? (
+          <a href="/api/auth/logout">Log out</a>
+        ) : (
+          <a href="/api/auth/login">Log in</a>
+        )}
         <Switch>
           <Route path="/cv/:slug">
             <Cv />
