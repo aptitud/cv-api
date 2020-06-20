@@ -26,7 +26,6 @@ const getCvs = async () => {
       params: { include: 2, content_type: 'cv', locale: '*' },
     }).then(x => x.data),
   ])
-  console.log(schema, locales, data)
   const cvs = transform({ schema, locales, data })
   cache.set('cvs', cvs, 600)
   return cvs
