@@ -26,4 +26,4 @@ app.use(async (ctx, next) => {
     })
 })
 app.use(routes)
-app.listen(5555)
+app.listen(process.env.PORT || 5555)
