@@ -78,6 +78,16 @@ router.get('/:slug', authenticate, async ctx => {
   ctx.body = cv
 })
 
+router.post('/cf/hook', async ctx => {
+  const secret = ctx.get('x-secret')
+  if (secret !== process.env.CF_HOOK_SECRET) {
+    ctx.throw(404)
+    return
+  }
+  cache.del('cvs')
+  ctx.body = 'ok'
+})
+
 router.get('/auth/login', async ctx => {
   const nonce = crypto.randomBytes(16).toString('base64')
   const randomValue = crypto.randomBytes(16).toString('base64')
