@@ -6,6 +6,7 @@ const serve = require('koa-static')
 const routes = require('./routes')
 
 const app = new Koa()
+app.proxy = true
 app.use(cors())
 app.use(serve(`${process.cwd()}/build`))
 app.use(async (ctx, next) => {
