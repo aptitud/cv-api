@@ -8,7 +8,8 @@
     "client": "react-scripts start",
     "server": "nodemon --ignore src/ server/server.js",
     "build": "react-scripts build",
-    "test": "jest"
+    "test": "jest",
+    "start": "node server/app.js"
   },
   "license": "MIT",
   "dependencies": {
