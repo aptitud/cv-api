@@ -6,6 +6,7 @@ const querystring = require('querystring')
 const axios = require('axios')
 const jwt = require('jsonwebtoken')
 const { transform } = require('./transfomer')
+const docx = require('./docx')
 
 const contentful = axios.create({
   baseURL: 'https://cdn.contentful.com/spaces/kqhdnxbobtly/environments/master',
@@ -76,6 +77,22 @@ router.get('/:slug', authenticate, async ctx => {
     throw Boom.notFound('kalle', 'dsfsd')
   }
   ctx.body = cv
+})
+
+router.get('/:slug/docx', authenticate, async ctx => {
+  const { slug } = ctx.params
+  const cvs = await getCvs()
+  const cv = cvs.find(x => x.slug === slug)
+  if (!cv) {
+    throw Boom.notFound('CV not found')
+  }
+  ctx.set(
+    'content-type',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  )
+  ctx.set('content-disposition', `attachment; filename="${slug}.docx"`)
+  const doc = await docx(cv)
+  ctx.body = doc
 })
 
 router.post('/cf/hook', async ctx => {
