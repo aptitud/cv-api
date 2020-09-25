@@ -19,7 +19,7 @@ app.use(async (ctx, next) => {
 app.use(async (ctx, next) => {
   await next()
     .then(() => ctx.assert(ctx.status < 400, ctx.status))
-    .catch(err => {
+    .catch((err) => {
       console.error(err.stack)
       const error = err.isBoom
         ? err
@@ -34,4 +34,6 @@ app.use(async (ctx, next) => {
     })
 })
 app.use(routes)
-app.listen(process.env.PORT || 5555)
+const port = process.env.PORT || 5555
+app.listen(port)
+console.log(`Listening on port ${port}`)
