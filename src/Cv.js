@@ -6,7 +6,7 @@ import Skills from './Skills'
 import Paragraphs from './Paragraphs'
 import styled from '@emotion/styled'
 
-const getStringsForLocale = locale => {
+const getStringsForLocale = (locale) => {
   return Object.entries({
     assignments: {
       sv: 'Uppdrag',
@@ -25,6 +25,7 @@ const getStringsForLocale = locale => {
 
 const Cv = styled.div`
   background-color: #ffffff;
+  padding: 2rem;
 `
 
 export default withRouter(({ match }) => {
@@ -35,8 +36,8 @@ export default withRouter(({ match }) => {
       return
     }
     fetch(`/api/${slug}`)
-      .then(x => (x.ok ? x.json() : Promise.reject()))
-      .then(x => setData(x))
+      .then((x) => (x.ok ? x.json() : Promise.reject()))
+      .then((x) => setData(x))
       .catch(() => setData(null))
   }, [slug])
   if (!data) {
@@ -49,7 +50,7 @@ export default withRouter(({ match }) => {
       <Intro {...data} />
       <h2>{strings.assignments}</h2>
       {data.assignments.sort(sortAssignment).map((x, i) => (
-        <Assignment key={i} {...x} />
+        <Assignment key={i} {...x} locale={data.locale} />
       ))}
       {data.education && (
         <>

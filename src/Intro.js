@@ -10,9 +10,7 @@ export default ({
   methods,
 }) => (
   <section>
-    <p>
-      <strong>{title}</strong>
-    </p>
+    <h2>{title}</h2>
     <Paragraphs text={introduction} />
     <p>
       <strong>{strings[locale].languages}:</strong> {languages}

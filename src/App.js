@@ -8,7 +8,7 @@ export default () => {
   const [loggedIn, setLoggedIn] = useState(true)
   useEffect(() => {
     fetch('/api')
-      .then(x => {
+      .then((x) => {
         switch (x.status) {
           case 200:
             return x.json()
@@ -20,7 +20,7 @@ export default () => {
             return []
         }
       })
-      .then(x => setCvs(x))
+      .then((x) => setCvs(x))
   }, [])
   return (
     <>
@@ -30,9 +30,22 @@ export default () => {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            max-width: 60rem;
+          }
+          h1,
+          h2,
+          h3 {
+            margin: 0;
+            padding: 0;
           }
           h1 {
-            display: inline-block;
+            margin: 2rem 0 1rem;
+          }
+          h2 {
+            margin: 2.5rem 0 1rem;
+          }
+          h3 {
+            margin: 1.5rem 0 0;
           }
         `}
       />
