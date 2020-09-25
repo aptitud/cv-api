@@ -12,15 +12,12 @@ export default ({
   <section>
     <h2>{title}</h2>
     <Paragraphs text={introduction} />
-    <p>
-      <strong>{strings[locale].languages}:</strong> {languages}
-    </p>
-    <p>
-      <strong>{strings[locale].techniques}:</strong> {techniques}
-    </p>
-    <p>
-      <strong>{strings[locale].methods}:</strong> {methods}
-    </p>
+    <h3>{strings[locale].languages}</h3>
+    <p>{languages}</p>
+    <h3>{strings[locale].techniques}</h3>
+    <p>{techniques}</p>
+    <h3>{strings[locale].methods}</h3>
+    <p>{methods}</p>
   </section>
 )
 

@@ -3,9 +3,9 @@ import styled from '@emotion/styled'
 import Paragraphs from './Paragraphs'
 
 const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  & span {
+    font-weight: normal;
+  }
 `
 
 export default ({
@@ -22,10 +22,15 @@ export default ({
   return (
     <section>
       <Header>
-        <h3>{client}</h3>
-        <strong>
-          {fromYear === toYear || !toYear ? fromYear : `${fromYear}–${toYear}`}
-        </strong>
+        <h3>
+          {client}
+          <span>
+            ,{' '}
+            {fromYear === toYear || !toYear
+              ? fromYear
+              : `${fromYear}–${toYear}`}
+          </span>
+        </h3>
       </Header>
       <Paragraphs text={description} />
       {roles && (
